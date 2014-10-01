@@ -27,6 +27,10 @@ ctx->beginPath();
 			ctx->fillStyle("white");
 			ctx->fillText("Recently Watched",5 , 10);  
 
+Horizontal line
+========
+ctx.beginPath();ctx.lineWidth = 2;ctx.moveTo(0,230);ctx.lineTo(canvas.width,230);ctx.strokeStyle = '#ff0000';ctx.stroke();
+
 Credits
 ========
 me<br />
