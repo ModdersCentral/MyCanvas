@@ -65,10 +65,8 @@ int main() {
 
 
 			///working on these atm.. 
-
-			 //ctx->setsPixel(1,1,2,3,4);
-		//  ctx->drawRect(10,10,200,300,0,0,0);
-		 	ctx->RectangleToBitmap(50,50,1366,900,0,12,0);
+  ctx->drawRect(10,10,ctx->GetWidth() - 20,ctx->GetHeight() - 20,0,0,0);
+		 //	ctx->RectangleToBitmap(10,10,ctx->GetWidth() - 20, ctx->GetHeight() - 20,30,12,255);
 			  ctx->Draw();
 			
 			 std::this_thread::sleep_for (std::chrono::seconds(10)); 

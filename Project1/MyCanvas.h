@@ -5,9 +5,13 @@
 #include <sstream> 
 #include <fstream>
 #include <iostream> 
+#include <vector>
 class MyCanvas {
 public:
 	MyCanvas(); 
+	~MyCanvas();
+	int GetWidth();
+	int GetHeight();
 	std::string DebugScreen();
 	void beginPath();
 		//shapes
@@ -42,7 +46,7 @@ protected:
 	void drawFastVLine(int x, int y,  int h, unsigned char r, unsigned char g, unsigned char b);
 	void drawFastHLine(int x, int y, int w, unsigned char r, unsigned char g, unsigned char b);
 	BYTE* ConvertRGBToBMPBuffer ( BYTE* Buffer, int width, int height, long* newsize );
-	bool SaveBMP ( BYTE* Buffer, int width, int height, long paddedsize, LPCTSTR bmpfile );
+	bool SaveBMP ( BYTE* Buffer, int width, int height, long paddedsize, LPCTSTR bmpfile );  
 };
 #else
 #error MyCanvas.h has been included previously

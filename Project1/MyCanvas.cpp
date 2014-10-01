@@ -8,12 +8,70 @@
 int horizontal = 0;int vertical = 0;unsigned char *pixels;
 /*
 i thought this was going good then it fkd up..
-
-
-
 */
+		 //we get the width+height of the screen then we set the pixel container large enough to store it
+	MyCanvas::MyCanvas(){
+		GetDesktopResolution(horizontal, vertical);
+		pixels = new unsigned char[horizontal * vertical * 3];
+		clear(255,255,255);
+	}
+		 //we get the width+height by reffernce
+	void MyCanvas::GetDesktopResolution(int& horizontal, int& vertical){
+		RECT desktop;
+		const HWND hDesktop = GetDesktopWindow();
+		GetWindowRect(hDesktop, &desktop);
+		horizontal = desktop.right;
+		vertical = desktop.bottom;
+	}
+		 //we delete the pixel container/pointer
+	MyCanvas::~MyCanvas(){
+		delete[] pixels;
+	}
+		 //subroutine to clear the pixels to white
+	void MyCanvas::clear(){
+			clear(255, 255,255);
+	}
+	int MyCanvas::GetWidth(){
+		return horizontal;
+	}
+	int MyCanvas::GetHeight(){
+		return vertical;
+	}
+		 //set all the pixels a certain colour
+	void MyCanvas::clear(unsigned char r, unsigned char g, unsigned char b){
+			for (int i = 0; i < GetWidth() * GetHeight(); i++) {
+				pixels[i * 3 + 0] = r;
+				pixels[i * 3 + 1] = g;
+				pixels[i * 3 + 2] = b;
+			}
+	}
+	void MyCanvas::setsPixel(int x, int y,unsigned char r,unsigned char g,unsigned char b){
+		int idx = ((x*GetWidth())+y)*3;
+		pixels[idx + 0] = r;
+		pixels[idx + 1] = g;
+		pixels[idx + 2] = b;
+	}
+	 void MyCanvas::RectangleToBitmap(int X, int Y, int width, int height, unsigned char r, unsigned char g, unsigned char b){
+	for(int i = Y; i < (height+Y); i++) {for(int j = X; j < (width+X); j++) { setsPixel(i,j,r,g,b);}}
+	}
 
-	
+
+
+	 
+	  
+
+
+
+
+
+
+
+
+
+
+
+
+
 	 
 //incomplete
 	void MyCanvas::beginPath(){}
@@ -26,14 +84,24 @@ i thought this was going good then it fkd up..
 	void MyCanvas::strokeStyle(std::string color){/*use regex to parse: //argb //rgb //rgba //hex color //color*/}
 	void MyCanvas::fill(){}
 	void MyCanvas::stroke(){}
-	void MyCanvas::moveTo(int x,int y){}
+	void MyCanvas::moveTo(int x,int y){ }
 	void MyCanvas::lineTo(int x,int y){}
 
 	void MyCanvas::drawRect(int x, int y,  int w, int h, unsigned char r,unsigned char g,unsigned char b) {
-  drawFastHLine(x, y, w, r,g,b);
-  drawFastHLine(x, y+h-1, w, r,g,b);
-  drawFastVLine(x, y, h, r,g,b);
-  drawFastVLine(x+w-1, y, h, r,g,b);
+ drawFastHLine(x, y, h, r,g,b);
+
+
+
+ drawFastHLine(x, y+w-1, h, r,g,b);
+
+
+  drawFastVLine(x, y, w, r,g,b);
+
+
+
+  drawFastVLine(x+h-1, y, w, r,g,b);
+
+
 }
 
 
@@ -65,14 +133,9 @@ i thought this was going good then it fkd up..
 	
 
 	//completed or kinda completed
-		 MyCanvas::MyCanvas(){GetDesktopResolution(horizontal, vertical);pixels = new unsigned char[horizontal * vertical * 3];clear(255,255,255);}
-	void MyCanvas::clear(){clear(255, 255,255);}
-	void MyCanvas::clear(unsigned char r, unsigned char g, unsigned char b) {for (int i = 0; i < horizontal * vertical; i++) {pixels[i * 3 + 0] = r;pixels[i * 3 + 1] = g;pixels[i * 3 + 2] = b;}}
-	void MyCanvas::setsPixel (int x, int y,unsigned char r,unsigned char g,unsigned char b) {int idx = ((x*horizontal)+y)*3;pixels[idx + 0] = b;pixels[idx  + 1] = g;pixels[idx + 2] = r;}
 	void MyCanvas::getpixel(int x, int y, int &r, int &g, int &b){int idx = ((x*vertical)+y)*3;r = pixels[idx+0];g = pixels[idx+1];b = pixels[idx+2];}
 	void MyCanvas::rect(int x,int y,int width,int height){beginPath();moveTo(x, y);lineTo(x + width, y);lineTo(x + width, y + height);lineTo(x,y + height);lineTo(x,y);}
 	void MyCanvas::roundRect(int x,int y,int width,int height,int radius){if (width < 2 * radius){ radius = width / 2;}if (height < 2 * radius){ radius = height / 2;}beginPath();moveTo(x+radius, y);arcTo(x+width, y,   x+width, y+height, radius);arcTo(x+width, y+height, x,   y+height, radius);arcTo(x,   y+height, x,   y,   radius);arcTo(x,   y,   x+width, y,   radius);}
-	void MyCanvas::GetDesktopResolution(int& horizontal, int& vertical){RECT desktop;const HWND hDesktop = GetDesktopWindow();GetWindowRect(hDesktop, &desktop);horizontal = desktop.right;vertical = desktop.bottom;}
 	void MyCanvas::Draw(){
 			 long s;
 		BYTE* b = ConvertRGBToBMPBuffer ( pixels,  1366, 768, &s );
@@ -137,14 +200,7 @@ i thought this was going good then it fkd up..
     }
 }
 
-	 void MyCanvas::RectangleToBitmap(int X, int Y, int width, int height, unsigned char r, unsigned char g, unsigned char b){
-	 int i=0, j=0;
-	for(i = Y; i < (height+Y); i++) {
-		for(j = X; j < (width+X); j++) {
-			  pixels[i* horizontal + j + 0] = r; 
-		}
-	}
-}
+	
 
 
 
